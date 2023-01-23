@@ -71,7 +71,7 @@ Auditor <- "MulticastGroup\n(musicians)": "music" packets
 
 #### How do we **define and build our own Docker image**?                                
 En créant un Dockerfile et en mettant les instructions nécessaires pour notre image personnalisée dedans.
-Ensuite pour build l'image on utilise la commande `docker build`, par exemple : ```docker build -t dai/musician .``` ou dai/musician sera le nom de limage et . l'endroit ou trouver le Dockerfile donc ici . => répertoire courant.
+Ensuite pour build l'image on utilise la commande `docker build`, par exemple : ```docker build -t dai/musician .``` ou dai/musician sera le nom de limage et ```.``` l'endroit ou trouver le Dockerfile donc ici ```.``` => répertoire courant.
 
 #### How can we use the `ENTRYPOINT` statement in our Dockerfile?                        
 ```ENTRYPOINT``` est utilisé de manière équivalente à CMD => permet de fournir des paramètres au container lorsque celui ci se lance. La différence entre les deux étant que les paramètres de CMD peuvent être override ce qui n'est pas le cas avec ```ENTRYPOINT``` ou les paramètres fournis seront appendus.
@@ -91,7 +91,7 @@ On tue un container avec ```docker kill my_container```.
 #### How can we check that our running containers are effectively sending UDP datagrams? 
 Il y a plusieurs façons de faire, par exemple on peut logger à chaque fois qu'un datagramme UDP est envoyé. 
 
-On peut aussi utiliser tcpdump, par exemple depuis un container en execution (dans notre cas on a choisi le port 8059 pour le multicast) : ```tcpdump -i eth0 udp and port 8059```. Avec cet commande on peut bien voir en live les datagrammes UDP qui transitent.                                                    |
+On peut aussi utiliser tcpdump, par exemple depuis un container en execution (dans notre cas on a choisi le port 8059 pour le multicast) : ```tcpdump -i eth0 udp and port 8059```. Avec cet commande on peut bien voir en live les datagrammes UDP qui transitent.
 
 ### Task 4: implement an "auditor" Node.js application
 
