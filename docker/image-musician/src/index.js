@@ -1,7 +1,7 @@
-const dgram = require('dgram')
+const dgram = require('node:dgram')
 const { argv } = require('process')
 const socket = dgram.createSocket('udp4')
-const { uuid } = require('uuidv4')
+const { v4: uuid } = require('uuid')
 const protocol = require('./musician-protocol')
 
 

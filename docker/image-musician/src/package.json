@@ -9,8 +9,6 @@
   "author": "Célestin Piccin, Kévin Jorand",
   "license": "ISC",
   "dependencies": {
-    "dgram": "^1.0.1",
-    "uuid": "^9.0.0",
-    "uuidv4": "^6.2.13"
+    "uuid": "^9.0.0"
   }
 }
