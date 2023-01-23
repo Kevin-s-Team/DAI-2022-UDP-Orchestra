@@ -39,39 +39,33 @@ Auditor <- "MulticastGroup\n(musicians)": "music" packets
 
 ### Task 1: design the application architecture and protocols
 
-| #        | Topic                                                                                                                                                                   |
-| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
-|          | _Insert your diagram here..._                                                                                                                                           |
-| Question | Who is going to **send UDP datagrams** and **when**?                                                                                                                    |
-|          | _Enter your response here..._                                                                                                                                           |
-| Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received?                                                                        |
-|          | _Enter your response here..._                                                                                                                                           |
-| Question | What **payload** should we put in the UDP datagrams?                                                                                                                    |
-|          | _Enter your response here..._                                                                                                                                           |
-| Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures?                |
-|          | _Enter your response here..._                                                                                                                                           |
+
+#### How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? 
+
+#### Who is going to **send UDP datagrams** and **when**? 
+
+#### Who is going to **listen for UDP datagrams** and what should happen when a datagram is received?
+
+#### What **payload** should we put in the UDP datagrams?
+
+#### What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures?
 
 ### Task 2: implement a "musician" Node.js application
 
-| #        | Topic                                                                               |
-| -------- | ----------------------------------------------------------------------------------- |
-| Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-|          | _Enter your response here..._                                                       |
-| Question | What is **npm**?                                                                    |
-|          | _Enter your response here..._                                                       |
-| Question | What is the `npm install` command?                                                  |
-|          | _Enter your response here..._                                                       |
-| Question | How can we use the `https://www.npmjs.com/` web site?                               |
-|          | _Enter your response here..._                                                       |
-| Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122?               |
-|          | _Enter your response here..._                                                       |
-| Question | In Node.js, how can we execute a function on a **periodic** basis?                  |
-|          | _Enter your response here..._                                                       |
-| Question | In Node.js, how can we **emit UDP datagrams**?                                      |
-|          | _Enter your response here..._                                                       |
-| Question | In Node.js, how can we **access the command line arguments**?                       |
-|          | _Enter your response here..._                                                       |
+#### In a JavaScript program, if we have an object, how can we **serialize it in JSON**?
+#### What is **npm**?
+
+#### What is the `npm install` command?
+
+#### How can we use the `https://www.npmjs.com/` web site?
+
+#### In JavaScript, how can we **generate a UUID** compliant with RFC4122?
+
+#### In Node.js, how can we execute a function on a **periodic** basis?
+
+#### In Node.js, how can we **emit UDP datagrams**?
+
+#### In Node.js, how can we **access the command line arguments**?
 
 ### Task 3: package the "musician" app in a Docker image
 
