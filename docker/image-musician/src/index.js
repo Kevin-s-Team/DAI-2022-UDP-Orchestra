@@ -9,8 +9,8 @@ const protocol = require('./musician-protocol')
     multicastAddress: "231.6.7.9",
     port: 8059
 }*/
- 
- const instrumentSounds = {
+
+const instrumentSounds = {
      piano: 'ti-ta-ti',
      trumpet: 'pouet',
      flute: 'trulu',
@@ -18,7 +18,7 @@ const protocol = require('./musician-protocol')
      drum: 'boum-boum'
 }
 
-if(process.argv.length != 3 || !(process.argv[2] in instrumentSounds)){
+if(argv.length != 3 || !(argv[2] in instrumentSounds)){
     console.log('error with args');
     process.exit(1);
 }
