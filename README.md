@@ -13,13 +13,20 @@ Dans ce nouveau laboratoire, nous implémentons un "Orchestre UDP", composé de 
 
 Reminder: answer the following questions [here](https://forms.gle/6SM7cu4cYhNsRvqX8).
 
-### Diagrams
+### Task 1: design the application architecture and protocols
+
+#### How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? 
+
+Les communications ont lieu selon les schémas de principe ci-dessous :
+
 **Musicians**
 ```plantuml
 @startuml
 skinparam sequenceMessageAlign center
 
-Musicians -> "MulticastGroup\n(auditor)": UDP : {}
+Musicians -> "MulticastGroup\n(auditor)": UDP : JSON ( {idMusician, sound} )
+Musicians -> "MulticastGroup\n(auditor)": ...
+Musicians -> "MulticastGroup\n(auditor)": UDP : JSON ( {idMusician, sound} )
 @enduml
 ```
 
@@ -28,19 +35,24 @@ Musicians -> "MulticastGroup\n(auditor)": UDP : {}
 @startuml
 skinparam sequenceMessageAlign center
 
-User -> Auditor: TCP:2205 (connection)
-User <- Auditor: TCP => JSON ([{uuid, instrument, activeSince}, ...])
+"MulticastGroup\n(musicians)" <-- Auditor: Multicast subscription
+Auditor <- "MulticastGroup\n(musicians)": UDP : "music" as JSON \n( {idMusician, sound} )
+Auditor <- "MulticastGroup\n(musicians)": ...
 
-Auditor -> "MulticastGroup\n(musicians)": Subscription
-Auditor <- "MulticastGroup\n(musicians)": "music" packets
+User -> Auditor: TCP:2205 \n(connection)
+User <- Auditor: TCP : JSON \n( [{uuid, instrument, activeSince}, ...] )
 
+Auditor <- "MulticastGroup\n(musicians)": ...
+Auditor <- "MulticastGroup\n(musicians)": UDP : "music" as JSON \n( {idMusician, sound} )
+
+User -> Auditor: TCP:2205 \n(connection)
+User <- Auditor: TCP : JSON \n( [{uuid, instrument, activeSince}, ...] )
 @enduml
 ```
 
-### Task 1: design the application architecture and protocols
+L'architecture de notre orchestre UDP ressemble alors à ça :
 
-
-#### How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? 
+![Architecture](/images/InfraDiagram.drawio.png)
 
 #### Who is going to **send UDP datagrams** and **when**? 
 Les musiciens envoient les trames UDP toutes les secondes sur le groupe multicast / le port défini par le protocole.
