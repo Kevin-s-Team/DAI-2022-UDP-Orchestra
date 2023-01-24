@@ -43,29 +43,81 @@ Auditor <- "MulticastGroup\n(musicians)": "music" packets
 #### How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? 
 
 #### Who is going to **send UDP datagrams** and **when**? 
+Les musiciens envoient les trames UDP toutes les secondes sur le groupe multicast / le port défini par le protocole.
 
 #### Who is going to **listen for UDP datagrams** and what should happen when a datagram is received?
+L'auditeur (/les auditeurs) écoute le groupe multicast à l'adresse spécifiée par le protocole. A chaque trame reçue, l'auditeur détermine le type d'instrument ayant émis "son" et l'ajoute à la liste des musiciens actifs. S'il s'agit du premier son reçu, il note le timestand comme "activeSince". De plus un musicien qui n'a pas été actif depuis 5 secondes est retiré de la liste en question. Pour ce faire on tient encore à jour un attribut lastPlay dans notre liste qui permettra de connaitre le timestamp du dernier son reçu ... donc quand le retirer de la liste des musiciens actifs.
 
 #### What **payload** should we put in the UDP datagrams?
+Le payload des trames UDP contient : 
+```js
+{
+	idMusician,
+	sound
+}
+```
+Au format JSON, autrement dit quelque chose du type :
+```json
+{
+	"idMusician":"e02 . . . 33b8",
+	"sound":"ti-ta-ti"
+}
+```
 
 #### What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures?
 
 ### Task 2: implement a "musician" Node.js application
 
 #### In a JavaScript program, if we have an object, how can we **serialize it in JSON**?
+Il suffit d'employer la fonction ad-hoc : 
+```js
+JSON.stringify(OBJECT);
+```
+
 #### What is **npm**?
+NPM est littéralement le `Nope Package Manager`. Il s'agit d'un gestionnaire de paquets pour les projets JavaScript qui fonctionnent avec Node.js. Il permet  de télécharger, installer et gérer facilement leurs dépendances. 
 
 #### What is the `npm install` command?
+La commande `npm install` permet de télécharger et d'installer les paquets spécifiés dans le fichier `package.json`. Elle installe également les éventuelles dépendances de ces paquets. En exécutant cette commande sans spécifier de paquet, elle installera tous les paquets listés dans le fichier `package.json`.
 
 #### How can we use the `https://www.npmjs.com/` web site?
+Le site web [https://www.npmjs.com/](https://www.npmjs.com/) est un référentiel en ligne pour les paquets npm. Il permet de rechercher des paquets, de consulter leur documentation et de les télécharger. On peut également y publier nos propres paquets pour que d'autres personnes puissent les utiliser.
+
+Sur le site, il est possible de naviguer à travers les différentes catégories, de rechercher des paquets spécifiques (par exemple via la barre de recherche) et de consulter les informations sur les paquets tels que les versions, les dépendances et la documentation.
 
 #### In JavaScript, how can we **generate a UUID** compliant with RFC4122?
+En javascript, plus précisément avec Node.js, on peut générer un tel UUID grace à la fonction `v4()` du paquet `uuid`. Puisque c'est la seule que nous utilisons, nous avons fait un alias pour pouvoir l'utiliser comme `uuid()`.
 
 #### In Node.js, how can we execute a function on a **periodic** basis?
+La manière la plus simple est la fonction
+```js
+setInterval(function, intervalInMs);
+```
+qui n'est d'ailleurs pas spécifique à Node.js. 
 
 #### In Node.js, how can we **emit UDP datagrams**?
+Le package `dgram` étant déprécié, nous avons choisi d'utiliser la librairie du module : `module:dgram`. Ensuite, le code est relativement simple (en supposant que l'on souhaite utiliser IPv4) :
+```js
+const socket = dgram.createSocket('udp4')
+
+socket.send(payload, PORT, ADDRESS, function(err, bytes){
+	if(err){
+		console.log(err);
+	}else{
+		console.log("Sending payload: " + payload + " via port " + socket.address().port);
+	}
+});
+```
 
 #### In Node.js, how can we **access the command line arguments**?
+Nous pouvons utiliser :
+```js
+const { argv } = require('process')
+```
+Puis nous pouvons utiliser `argv` comme n'importe quel tableau:
+```js
+const instrument = argv[2];
+```
 
 ### Task 3: package the "musician" app in a Docker image
 
