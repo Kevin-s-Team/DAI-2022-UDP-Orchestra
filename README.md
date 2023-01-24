@@ -134,7 +134,7 @@ Par exemple dans notre Dockerfile de musician : ```ENTRYPOINT ["node", "/opt/app
 Avec la commande suivante (en partant du principe que l'image se nomme dai/musician) : ```docker run -d dai/musician drum```. Ici un container contenant un musician de type ```drum``` sera lancé. A noter que le ```-d``` n'est pas obligatoire, il permet seulement de lancer le container en background.
 
 #### How do we get the list of all **running containers**?
-Avec ```docker container ls``` ou alors avec ```docker ps```.
+Avec ```docker ps```.
 
 #### How do we **stop** and **kill** one running container?
 On stop un container avec ```docker stop my_container```.
@@ -195,9 +195,7 @@ server.listen(protocol.TCP_PORT, () => {
 
 ### Task 5: package the "auditor" app in a Docker image
 
-#### How do we validate that the whole system works, once we have built our Docker image? 
-En utilisant les scripts fournis pour valider le laboratoire ^^
-
-
+#### How do we validate that the whole system works, once we have built our Docker image?
+En faisant quelques essais testant particulièrement les fonctionnaliés requises et ... En utilisant les scripts fournis pour valider le laboratoire ^^
 
 ## Conclusion
