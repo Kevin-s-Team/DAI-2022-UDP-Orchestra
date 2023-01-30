@@ -105,23 +105,23 @@ chartCircle.render();
 var optionsHeatMap = {
   series: [{
       name: 'piano',
-      data: [0]
+      data: [{x:0,y:0}]
     },
     {
       name: 'trumpet',
-      data: [0]
+      data: [{x:0,y:0}]
     },
     {
       name: 'flute',
-      data: [0]
+      data: [{x:0,y:0}]
     },
     {
       name: 'violin',
-      data: [0]
+      data: [{x:0,y:0}]
     },
     {
       name: 'drum',
-      data: [0]
+      data: [{x:0,y:0}]
     }
 ],
   chart: {
@@ -140,8 +140,12 @@ title: {
 var chartHeatmap = new ApexCharts(document.querySelector("#heatmap"), optionsHeatMap);
 chartHeatmap.render();
 
+var t = 0;
+var maxHeatPoints = 20;
+var interv = 2000;
 
 window.setInterval(function () {
+  t += interv/1000;
 
   fetch('http://localhost:3000/', {headers: {'Accept-Encoding' : 'application/json'}})
     .then((response) => response.json())
@@ -168,26 +172,25 @@ window.setInterval(function () {
         Math.round(10000*parsedData.violin/total)/100,
         Math.round(10000*parsedData.drum/total)/100
       ]);
-      let dataPiano = [...chartHeatmap.w.config.series[0].data,parsedData.piano];
-      let dataTrumpet = [...chartHeatmap.w.config.series[1].data,parsedData.trumpet];
-      let dataFlute = [...chartHeatmap.w.config.series[2].data,parsedData.flute];
-      let dataViolin = [...chartHeatmap.w.config.series[3].data,parsedData.violin];
-      let dataDrum = [...chartHeatmap.w.config.series[4].data,parsedData.drum];
-
+      let dataPiano = [...chartHeatmap.w.config.series[0].data,{y:parsedData.piano,x:t}];
+      let dataTrumpet = [...chartHeatmap.w.config.series[1].data,{y:parsedData.trumpet,x:t}];
+      let dataFlute = [...chartHeatmap.w.config.series[2].data,{y:parsedData.flute,x:t}];
+      let dataViolin = [...chartHeatmap.w.config.series[3].data,{y:parsedData.violin,x:t}];
+      let dataDrum = [...chartHeatmap.w.config.series[4].data,{y:parsedData.drum,x:t}];
 
       chartHeatmap.updateSeries([{
-        data: dataPiano.slice(Math.max(dataPiano.length - 20, 0))
+        data: dataPiano.slice(Math.max(dataPiano.length - maxHeatPoints, 0))
       }, {
-        data: dataTrumpet.slice(Math.max(dataTrumpet.length - 20, 0))
+        data: dataTrumpet.slice(Math.max(dataTrumpet.length - maxHeatPoints, 0))
       }, {
-        data: dataFlute.slice(Math.max(dataFlute.length - 20, 0))
+        data: dataFlute.slice(Math.max(dataFlute.length - maxHeatPoints, 0))
       }, {
-        data: dataViolin.slice(Math.max(dataViolin.length - 20, 0))
+        data: dataViolin.slice(Math.max(dataViolin.length - maxHeatPoints, 0))
       }, {
-        data: dataDrum.slice(Math.max(dataDrum.length - 20, 0))
+        data: dataDrum.slice(Math.max(dataDrum.length - maxHeatPoints, 0))
       }]);
 
     })
     .catch(error => console.error(error));
 
-}, 2000);
+}, interv);
