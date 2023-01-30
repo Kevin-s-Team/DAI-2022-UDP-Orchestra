@@ -9,6 +9,10 @@ Célestin Piccin & Kévin Jorand
 
 Dans ce nouveau laboratoire, nous implémentons un "Orchestre UDP", composé de serveurs "musiciens" et d'un serveur "auditeur". Les premiers "jouent" de la musique en envoyant périodiquement des trames UDP (dont le payload varie selon "l'instrument" du "musicien") à un groupe multicast. Le second écoute ce même groupe multicast et garde trace des différents "musiciens" actifs (récemment). Ce dernier implémente aussi un serveur TCP qui permettra, à la connection de recevoir les informations "actuelles" (donc les musiciens actifs avec leur instrument).
 
+On trouve sur la branche `fancy` une version légèrement modifiée de l'auditeur qui va aussi transmettre les données via http (`JSON` aussi). On peut alors l'interroger directement en http... et en particulier depuis la page servie par le container `fancy`. Cette dernière propose alors une interface basique permettant de visualiser l'évolution du nombre de musiciens de chaque instrument. 
+
+***Disclaimer** : Il s'agit uniquement d'un approfondissement personnel et peut donc ne pas répondre aux exigences d'un rendu officiel*
+
 ## Tasks and questions
 
 Reminder: answer the following questions [here](https://forms.gle/6SM7cu4cYhNsRvqX8).
