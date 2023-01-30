@@ -3,6 +3,9 @@ const net = require('net')
 const day = require('dayjs')
 const protocol = require('./auditor-protocol')
 
+// Pour le "fancy dashboard"
+const http = require('http')
+
 // crée un socket UDP IPv4
 const socket = dgram.createSocket('udp4');
 
@@ -87,3 +90,33 @@ function onClientConnection(sock){
     sock.write(JSON.stringify(payload));
     sock.end();
 };
+
+
+/* partie Fancy - Ajout */
+// To make a payload from the current state
+function getCurrentStateAsJSON(){
+	payload = [];
+	for (const val of musicians.values()) {
+		let res = {...val};
+		delete res.lastPlay;
+		console.log(res);
+		payload.push(res);
+	}
+
+	return JSON.stringify(payload);
+}
+
+// Ultra basic http server answering with code 200 and the current state as JSON 
+// to any incoming request
+const httpServer = http.createServer((req, res) => {
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+	res.end(getCurrentStateAsJSON());
+});
+
+// Launch said server
+httpServer.listen(3000, () => {
+	console.log('Http server running on port 3000');
+});
+  
