@@ -78,6 +78,11 @@ Au format JSON, autrement dit quelque chose du type :
 
 #### What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures?
 
+**Musicien**
+Nous n'utilisons pas de structure particulière autre que celle du `payload` (JSON contenant simplement l'ID et le son) et la "table de correspondance" (dictionnaire) : `instrumentSounds` qui permet simplement de faire le lien entre un instrument et le son produit.
+
+**Auditeur**
+On retrouve le même type de structure `soundsIntstruments` pour passer cette fois-ci du son à l'instrument. On a de plus une `Map` permettant de stocker l'historique des musiciens entendus.
 ### Task 2: implement a "musician" Node.js application
 
 #### In a JavaScript program, if we have an object, how can we **serialize it in JSON**?
